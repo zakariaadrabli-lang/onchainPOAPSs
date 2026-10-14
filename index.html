@@ -1,0 +1,783 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Onchain POAPs — Base Sepolia</title>
+    <meta name="description" content="Create, mint, and distribute soulbound POAP badges on the Base network." />
+    <meta property="og:image" content="https://bolt.new/static/og_default.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://bolt.new/static/og_default.png" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <!-- Farcaster Frame meta -->
+    <meta name="fc:frame" content='{"version":"next","imageUrl":"https://bolt.new/static/og_default.png","button":{"title":"Open POAP App","action":{"type":"launch_frame","name":"Onchain POAPs","url":"/"}}}' />
+  </head>
+  <body>
+    <div id="app">
+      <!-- Background Orbs -->
+      <div class="bg-orbs">
+        <div class="bg-orb bg-orb-1"></div>
+        <div class="bg-orb bg-orb-2"></div>
+        <div class="bg-orb bg-orb-3"></div>
+      </div>
+
+      <!-- Header -->
+      <header class="header">
+        <div class="container">
+          <div class="header-inner">
+            <div class="logo">
+              <div class="logo-icon">&#9879;</div>
+              <span class="logo-text">Onchain POAPs</span>
+            </div>
+
+            <nav class="nav">
+              <button class="nav-item active" data-page="home" data-i18n="nav.home">Home</button>
+              <button class="nav-item" data-page="create" data-i18n="nav.create">Create POAP</button>
+              <button class="nav-item" data-page="mint" data-i18n="nav.mint">Mint Hub</button>
+              <button class="nav-item" data-page="gallery" data-i18n="nav.gallery">Gallery</button>
+              <button class="nav-item" data-page="allowlist" data-i18n="nav.allowlist">Allowlist Tools</button>
+              <button class="nav-item" data-page="qr" data-i18n="nav.qr">QR Signature</button>
+              <button class="nav-item" data-page="docs" data-i18n="nav.docs">Documentation</button>
+            </nav>
+
+            <div class="header-actions">
+              <div class="mode-switch">
+                <button class="mode-btn active" data-mode="standalone" data-i18n="header.standalone">Standalone</button>
+                <button class="mode-btn" data-mode="farcaster" data-i18n="header.farcaster">Farcaster</button>
+              </div>
+
+              <div class="lang-switch">
+                <button class="lang-btn active" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="fr">FR</button>
+              </div>
+
+              <div class="network-pill" id="network-pill">
+                <span class="dot"></span>
+                <span data-i18n="common.network.base">Base Sepolia</span>
+              </div>
+
+              <button class="btn-wallet" id="wallet-btn">
+                <span data-i18n="header.connect">Connect Wallet</span>
+              </button>
+
+              <button class="menu-toggle" id="menu-toggle">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="container">
+
+        <!-- Farcaster Banner -->
+        <div class="farcaster-banner" id="farcaster-banner">
+          <span class="icon">&#9889;</span>
+          <span data-i18n="farcaster.banner">Farcaster Mini App mode active</span>
+        </div>
+
+        <!-- HOME PAGE -->
+        <section class="page-view active" id="page-home">
+          <div class="hero">
+            <div class="hero-badge">
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--c-accent);box-shadow:0 0 8px var(--c-accent);"></span>
+              <span data-i18n="hero.badge">Onchain POAPs on Base Sepolia</span>
+            </div>
+            <h1>
+              <span data-i18n="hero.title.1">Mint Memories,</span><br>
+              <span class="gradient-text" data-i18n="hero.title.2">Forever Onchain</span>
+            </h1>
+            <p data-i18n="hero.desc">Create, mint, and distribute soulbound POAP badges on the Base network.</p>
+            <div class="hero-actions">
+              <button class="btn btn-primary btn-lg" data-nav="create" data-i18n="hero.cta.create">Create a POAP</button>
+              <button class="btn btn-secondary btn-lg" data-nav="gallery" data-i18n="hero.cta.gallery">Browse Gallery</button>
+            </div>
+            <div class="hero-stats">
+              <div class="stat-item">
+                <div class="stat-value">10K+</div>
+                <div class="stat-label" data-i18n="hero.stats.poaps">POAPs Minted</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">500+</div>
+                <div class="stat-label" data-i18n="hero.stats.events">Events Created</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">8K+</div>
+                <div class="stat-label" data-i18n="hero.stats.holders">Unique Holders</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center mt-6 mb-4">
+            <h2 data-i18n="hero.features">Everything you need to run onchain events</h2>
+          </div>
+
+          <div class="feature-grid">
+            <div class="glass-card feature-card" data-page="create">
+              <div class="card-header">
+                <div class="card-icon">&#9999;</div>
+                <div>
+                  <div class="card-title" data-i18n="feature.create.title">Create POAP</div>
+                </div>
+              </div>
+              <p data-i18n="feature.create.desc">Design custom SVG artwork and register soulbound event badges.</p>
+            </div>
+
+            <div class="glass-card feature-card" data-page="mint">
+              <div class="card-header">
+                <div class="card-icon">&#9881;</div>
+                <div>
+                  <div class="card-title" data-i18n="feature.mint.title">Mint Hub</div>
+                </div>
+              </div>
+              <p data-i18n="feature.mint.desc">Public, allowlist, and signature minting with real-time tracking.</p>
+            </div>
+
+            <div class="glass-card feature-card" data-page="gallery">
+              <div class="card-header">
+                <div class="card-icon">&#127915;</div>
+                <div>
+                  <div class="card-title" data-i18n="feature.gallery.title">Gallery</div>
+                </div>
+              </div>
+              <p data-i18n="feature.gallery.desc">Browse your collected POAPs with onchain verification.</p>
+            </div>
+
+            <div class="glass-card feature-card" data-page="allowlist">
+              <div class="card-header">
+                <div class="card-icon">&#128274;</div>
+                <div>
+                  <div class="card-title" data-i18n="feature.allowlist.title">Allowlist Tools</div>
+                </div>
+              </div>
+              <p data-i18n="feature.allowlist.desc">Generate Merkle roots and proofs for gated minting.</p>
+            </div>
+
+            <div class="glass-card feature-card" data-page="qr">
+              <div class="card-header">
+                <div class="card-icon">&#128276;</div>
+                <div>
+                  <div class="card-title" data-i18n="feature.qr.title">QR Signature Generator</div>
+                </div>
+              </div>
+              <p data-i18n="feature.qr.desc">Create mint URLs and QR codes for physical posters at events.</p>
+            </div>
+
+            <div class="glass-card feature-card" data-page="docs">
+              <div class="card-header">
+                <div class="card-icon">&#128218;</div>
+                <div>
+                  <div class="card-title" data-i18n="feature.docs.title">Documentation</div>
+                </div>
+              </div>
+              <p data-i18n="feature.docs.desc">Learn about soulbound tokens, Merkle trees, and signature mints.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- CREATE POAP PAGE -->
+        <section class="page-view" id="page-create">
+          <div class="page-header">
+            <h1 class="page-title" data-i18n="create.title">Create a POAP</h1>
+            <p class="page-subtitle" data-i18n="create.subtitle">Design and register your onchain event badge</p>
+          </div>
+
+          <div class="create-layout">
+            <!-- Form -->
+            <div class="glass-card">
+              <!-- Basic Info -->
+              <div class="card-header">
+                <div class="card-icon">&#9999;</div>
+                <div>
+                  <div class="card-title" data-i18n="create.section.basic">Basic Information</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label"><span data-i18n="create.name">POAP Name</span><span class="required">*</span></label>
+                <input type="text" class="form-input" id="create-name" data-i18n-ph="create.name.ph" placeholder="e.g. Devcon 2026 Attendee" />
+                <div class="form-hint" data-i18n="create.name.hint">The display name for your event badge</div>
+              </div>
+
+              <!-- Artwork -->
+              <div class="card-header" style="margin-top: var(--sp-6);">
+                <div class="card-icon">&#127912;</div>
+                <div>
+                  <div class="card-title" data-i18n="create.section.artwork">Artwork</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label"><span data-i18n="create.svglbl">SVG Image</span><span class="required">*</span></label>
+                <div class="file-upload" id="svg-upload-area">
+                  <div class="file-upload-icon">&#128228;</div>
+                  <div class="file-upload-text" data-i18n="create.upload">Click to upload SVG</div>
+                  <div class="file-upload-hint" data-i18n="create.upload.hint">SVG files only — max 100KB</div>
+                  <input type="file" id="svg-file-input" accept=".svg,image/svg+xml" />
+                </div>
+                <div class="form-hint mt-4" data-i18n="create.svg.hint">Upload an SVG file or paste SVG code below</div>
+                <textarea class="form-textarea mt-4" id="svg-paste" data-i18n-ph="create.svg.ph" placeholder="<svg ...>" rows="6"></textarea>
+              </div>
+
+              <!-- Mint Settings -->
+              <div class="card-header" style="margin-top: var(--sp-6);">
+                <div class="card-icon">&#9881;</div>
+                <div>
+                  <div class="card-title" data-i18n="create.section.settings">Mint Settings</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="toggle-wrap" style="margin-bottom: var(--sp-3);">
+                  <div class="toggle-info">
+                    <span class="toggle-label" data-i18n="create.soulbound">Soulbound</span>
+                    <span class="toggle-desc" data-i18n="create.soulbound.desc">Token cannot be transferred after minting</span>
+                  </div>
+                  <label class="toggle">
+                    <input type="checkbox" id="toggle-soulbound" checked />
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+                <div class="toggle-wrap">
+                  <div class="toggle-info">
+                    <span class="toggle-label" data-i18n="create.public">Public Mint</span>
+                    <span class="toggle-desc" data-i18n="create.public.desc">Anyone can mint this POAP</span>
+                  </div>
+                  <label class="toggle">
+                    <input type="checkbox" id="toggle-public" />
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Optional -->
+              <div class="card-header" style="margin-top: var(--sp-6);">
+                <div class="card-icon">&#128221;</div>
+                <div>
+                  <div class="card-title" data-i18n="create.section.optional">Optional Details</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" data-i18n="create.desc">Description</label>
+                <textarea class="form-textarea" id="create-desc" data-i18n-ph="create.desc.ph" placeholder="Describe your event..." rows="3" style="font-family: inherit;"></textarea>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" data-i18n="create.location">Location</label>
+                  <input type="text" class="form-input" id="create-location" data-i18n-ph="create.location.ph" placeholder="e.g. Paris, France" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" data-i18n="create.date">Event Date</label>
+                  <input type="date" class="form-input" id="create-date" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" data-i18n="create.url">External URL</label>
+                <input type="url" class="form-input" id="create-url" data-i18n-ph="create.url.ph" placeholder="https://your-event.com" />
+              </div>
+
+              <button class="btn btn-primary btn-lg btn-full" id="create-submit" data-i18n="create.submit">Register POAP</button>
+
+              <div id="create-result" class="hidden"></div>
+            </div>
+
+            <!-- Preview -->
+            <div class="glass-card preview-card">
+              <div class="card-header">
+                <div class="card-icon">&#128065;</div>
+                <div>
+                  <div class="card-title" data-i18n="create.preview">Live Preview</div>
+                </div>
+              </div>
+
+              <div class="preview-badge-wrap">
+                <div class="preview-svg-container" id="preview-svg-container" style="display:none;"></div>
+                <div class="preview-svg-placeholder" id="preview-placeholder" style="padding: var(--sp-7);">
+                  <div class="icon">&#127912;</div>
+                  <p data-i18n="create.preview.empty">Your POAP preview will appear here</p>
+                  <p class="text-sm text-muted mt-4" data-i18n="create.preview.empty.desc">Upload SVG artwork and fill in the form</p>
+                </div>
+              </div>
+
+              <div class="preview-meta">
+                <div class="preview-badges" id="preview-badges"></div>
+                <h3 id="preview-name">Untitled POAP</h3>
+                <div class="preview-meta-row">
+                  <span class="label" data-i18n="create.desc">Description</span>
+                  <span class="value" id="preview-desc">None</span>
+                </div>
+                <div class="preview-meta-row">
+                  <span class="label" data-i18n="create.location">Location</span>
+                  <span class="value" id="preview-loc">None</span>
+                </div>
+                <div class="preview-meta-row">
+                  <span class="label" data-i18n="create.date">Event Date</span>
+                  <span class="value" id="preview-date">None</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- MINT HUB PAGE -->
+        <section class="page-view" id="page-mint">
+          <div class="page-header">
+            <h1 class="page-title" data-i18n="mint.title">Minting Hub</h1>
+            <p class="page-subtitle" data-i18n="mint.subtitle">Mint your POAP badges on Base Sepolia</p>
+          </div>
+
+          <div class="mint-tabs">
+            <button class="mint-tab active" data-mint-tab="public">&#128279; <span data-i18n="mint.public">Public Mint</span></button>
+            <button class="mint-tab" data-mint-tab="allowlist">&#128274; <span data-i18n="mint.allowlist">Allowlist Mint</span></button>
+            <button class="mint-tab" data-mint-tab="signature">&#9999; <span data-i18n="mint.signature">Signature Mint</span></button>
+          </div>
+
+          <!-- Public Mint Panel -->
+          <div class="mint-panel active" id="mint-panel-public">
+            <div class="glass-card">
+              <div class="mint-info-box">
+                <div class="mint-info-box-icon">&#8505;</div>
+                <p data-i18n="mint.info.public">Public mints are open to everyone.</p>
+              </div>
+              <div class="form-group">
+                <label class="form-label" data-i18n="mint.poapid">POAP ID</label>
+                <input type="number" class="form-input" id="mint-public-poapid" data-i18n-ph="mint.poapid.ph" placeholder="Enter the POAP ID" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" data-i18n="mint.recipient">Recipient Address</label>
+                <input type="text" class="form-input" id="mint-public-recipient" data-i18n-ph="mint.recipient.ph" placeholder="0x... (defaults to your wallet)" />
+              </div>
+              <button class="btn btn-primary btn-lg btn-full" id="mint-public-btn" data-i18n="mint.btn.public">Mint Now</button>
+              <div id="mint-public-result" class="hidden"></div>
+            </div>
+          </div>
+
+          <!-- Allowlist Mint Panel -->
+          <div class="mint-panel" id="mint-panel-allowlist">
+            <div class="glass-card">
+              <div class="mint-info-box">
+                <div class="mint-info-box-icon">&#8505;</div>
+                <p data-i18n="mint.info.allowlist">Allowlist mints require a Merkle proof.</p>
+              </div>
+              <div class="form-group">
+                <label class="form-label" data-i18n="mint.poapid">POAP ID</label>
+                <input type="number" class="form-input" id="mint-allowlist-poapid" data-i18n-ph="mint.poapid.ph" placeholder="Enter the POAP ID" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" data-i18n="mint.recipient">Recipient Address</label>
+                <input type="text" class="form-input" id="mint-allowlist-recipient" data-i18n-ph="mint.recipient.ph" placeholder="0x... (defaults to your wallet)" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" data-i18n="mint.proof">Merkle Proof</label>
+                <textarea class="form-textarea" id="mint-allowlist-proof" data-i18n-ph="mint.proof.ph" placeholder="Paste your Merkle proof (comma-separated hex)" rows="4"></textarea>
+              </div>
+              <button class="btn btn-primary btn-lg btn-full" id="mint-allowlist-btn" data-i18n="mint.btn.allowlist">Mint with Proof</button>
+              <div id="mint-allowlist-result" class="hidden"></div>
+            </div>
+          </div>
+
+          <!-- Signature Mint Panel -->
+          <div class="mint-panel" id="mint-panel-signature">
+            <div class="glass-card">
+              <div class="mint-info-box">
+                <div class="mint-info-box-icon">&#8505;</div>
+                <p data-i18n="mint.info.signature">Signature mints allow creators to authorize specific wallets.</p>
+              </div>
+              <div class="mint-info-box warning">
+                <div class="mint-info-box-icon">&#9888;</div>
+                <p data-i18n="mint.warn.deadline">Signature mints have a time window of up to 37 days.</p>
+              </div>
+              <div class="form-group">
+                <label class="form-label" data-i18n="mint.poapid">POAP ID</label>
+                <input type="number" class="form-input" id="mint-signature-poapid" data-i18n-ph="mint.poapid.ph" placeholder="Enter the POAP ID" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" data-i18n="mint.recipient">Recipient Address</label>
+                <input type="text" class="form-input" id="mint-signature-recipient" data-i18n-ph="mint.recipient.ph" placeholder="0x... (defaults to your wallet)" />
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" data-i18n="mint.deadline">Deadline</label>
+                  <input type="number" class="form-input" id="mint-signature-deadline" data-i18n-ph="mint.deadline.ph" placeholder="Unix timestamp deadline" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" data-i18n="mint.signature.v">Signature</label>
+                <textarea class="form-textarea" id="mint-signature-sig" data-i18n-ph="mint.signature.ph" placeholder="0x... (EIP-191 signature from creator)" rows="3"></textarea>
+              </div>
+              <button class="btn btn-primary btn-lg btn-full" id="mint-signature-btn" data-i18n="mint.btn.signature">Mint with Signature</button>
+              <div id="mint-signature-result" class="hidden"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- GALLERY PAGE -->
+        <section class="page-view" id="page-gallery">
+          <div class="page-header">
+            <div class="flex items-center justify-between flex-wrap gap-3">
+              <div>
+                <h1 class="page-title" data-i18n="gallery.title">My POAP Gallery</h1>
+                <p class="page-subtitle" data-i18n="gallery.subtitle">Your collected onchain event badges</p>
+              </div>
+              <button class="btn btn-secondary" id="gallery-load-btn" data-i18n="gallery.load">Load Gallery</button>
+            </div>
+          </div>
+
+          <div class="gallery-grid" id="gallery-grid"></div>
+
+          <div class="gallery-empty" id="gallery-empty">
+            <div class="icon">&#127915;</div>
+            <h3 data-i18n="gallery.empty">No POAPs found</h3>
+            <p class="mt-4 text-muted" data-i18n="gallery.empty.desc">Connect your wallet and mint some POAPs to see them here</p>
+          </div>
+        </section>
+
+        <!-- ALLOWLIST PAGE -->
+        <section class="page-view" id="page-allowlist">
+          <div class="page-header">
+            <h1 class="page-title" data-i18n="allowlist.title">Allowlist & Merkle Tree Generator</h1>
+            <p class="page-subtitle" data-i18n="allowlist.subtitle">Generate Merkle roots and proofs for gated minting</p>
+          </div>
+
+          <div class="glass-card">
+            <div class="form-group">
+              <label class="form-label" data-i18n="allowlist.input">Allowed Addresses</label>
+              <textarea class="form-textarea" id="allowlist-input" data-i18n-ph="allowlist.input.ph" rows="8" placeholder="Paste addresses here..."></textarea>
+            </div>
+            <button class="btn btn-primary btn-lg" id="merkle-generate-btn" data-i18n="allowlist.generate">Generate Merkle Tree</button>
+          </div>
+
+          <div class="merkle-results">
+            <div class="glass-card">
+              <div class="flex items-center justify-between mb-4">
+                <h3 data-i18n="allowlist.root">Merkle Root</h3>
+                <button class="btn btn-ghost btn-sm" id="copy-root-btn" data-i18n="allowlist.copy">Copy</button>
+              </div>
+              <div class="merkle-root-box" id="merkle-root"><span class="text-muted" data-i18n="allowlist.root.empty">Root will appear here</span></div>
+              <div class="form-hint mt-4" id="merkle-count"></div>
+            </div>
+
+            <div class="glass-card">
+              <div class="flex items-center justify-between mb-4">
+                <h3 data-i18n="allowlist.proofs">Generated Proofs</h3>
+                <button class="btn btn-ghost btn-sm" id="copy-proofs-btn" data-i18n="allowlist.copy">Copy</button>
+              </div>
+              <div class="proof-list" id="merkle-proofs">
+                <div class="text-muted text-center" style="padding: var(--sp-5);" data-i18n="allowlist.proofs.empty">Proofs will appear here</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- QR SIGNATURE PAGE -->
+        <section class="page-view" id="page-qr">
+          <div class="page-header">
+            <h1 class="page-title" data-i18n="qr.title">Signature & QR Code Generator</h1>
+            <p class="page-subtitle" data-i18n="qr.subtitle">Create mint URLs and QR codes for live events</p>
+          </div>
+
+          <div class="qr-layout">
+            <!-- QR Generator -->
+            <div class="glass-card">
+              <div class="card-header">
+                <div class="card-icon">&#128276;</div>
+                <div>
+                  <div class="card-title">QR Code Generator</div>
+                </div>
+              </div>
+
+              <div class="mint-info-box mb-4">
+                <div class="mint-info-box-icon">&#8505;</div>
+                <p data-i18n="qr.info">Print this QR code on physical posters at your event.</p>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" data-i18n="qr.url">Mint URL</label>
+                <input type="url" class="form-input" id="qr-url" data-i18n-ph="qr.url.ph" placeholder="https://yourapp.com/mint?poapId=1&sig=0x..." />
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" data-i18n="qr.size">QR Size</label>
+                  <select class="form-select" id="qr-size">
+                    <option value="200">200px</option>
+                    <option value="300" selected>300px</option>
+                    <option value="400">400px</option>
+                    <option value="500">500px</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" data-i18n="qr.color">Foreground Color</label>
+                  <input type="color" class="form-input" id="qr-color" value="#060818" style="height: 46px; padding: 4px; cursor: pointer;" />
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <button class="btn btn-primary" id="qr-generate-btn" data-i18n="qr.generate">Generate QR Code</button>
+                <button class="btn btn-secondary" id="qr-download-btn" data-i18n="qr.download">Download QR</button>
+              </div>
+            </div>
+
+            <!-- QR Preview -->
+            <div class="glass-card">
+              <div class="card-header">
+                <div class="card-icon">&#128065;</div>
+                <div>
+                  <div class="card-title" data-i18n="qr.preview">QR Preview</div>
+                </div>
+              </div>
+              <div class="qr-canvas-wrap" id="qr-canvas-wrap">
+                <div class="qr-empty" data-i18n="qr.preview.empty">Enter a URL and generate to see the QR code</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Signature Generator -->
+          <div class="glass-card mt-6">
+            <div class="card-header">
+              <div class="card-icon">&#9999;</div>
+              <div>
+                <div class="card-title" data-i18n="qr.sign.gen">Generate Signature Data</div>
+                <div class="card-subtitle">For creators to authorize wallet-specific mints</div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" data-i18n="qr.sign.poapid">POAP ID</label>
+                <input type="number" class="form-input" id="sign-poapid" placeholder="1" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" data-i18n="qr.sign.recipient">Recipient Address</label>
+                <input type="text" class="form-input" id="sign-recipient" placeholder="0x..." />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" data-i18n="qr.sign.deadline">Deadline (days from now)</label>
+              <input type="number" class="form-input" id="sign-deadline" value="37" min="1" max="37" />
+            </div>
+
+            <button class="btn btn-accent" id="sign-generate-btn" data-i18n="qr.sign.gen">Generate Signature Data</button>
+
+            <div id="sign-output" class="hidden"></div>
+          </div>
+        </section>
+
+        <!-- DOCS PAGE -->
+        <section class="page-view" id="page-docs">
+          <div class="page-header">
+            <h1 class="page-title" data-i18n="docs.title">Documentation</h1>
+            <p class="page-subtitle" data-i18n="docs.subtitle">Learn how Onchain POAPs work</p>
+          </div>
+
+          <div class="docs-layout">
+            <aside class="docs-sidebar">
+              <div class="glass-card" style="padding: var(--sp-4);">
+                <div class="docs-nav">
+                  <button class="docs-nav-item active" data-docs-section="overview" data-i18n="docs.nav.overview">Overview</button>
+                  <button class="docs-nav-item" data-docs-section="soulbound" data-i18n="docs.nav.soulbound">Soulbound POAPs</button>
+                  <button class="docs-nav-item" data-docs-section="merkle" data-i18n="docs.nav.merkle">Merkle Trees</button>
+                  <button class="docs-nav-item" data-docs-section="signature" data-i18n="docs.nav.signature">Signature Mints</button>
+                  <button class="docs-nav-item" data-docs-section="svg" data-i18n="docs.nav.svg">SVG Rules</button>
+                  <button class="docs-nav-item" data-docs-section="farcaster" data-i18n="docs.nav.farcaster">Farcaster Mini App</button>
+                </div>
+              </div>
+            </aside>
+
+            <div class="glass-card docs-content">
+              <!-- Overview -->
+              <div class="docs-section active" id="docs-section-overview">
+                <h3>Overview</h3>
+                <p>Onchain POAPs is a decentralized application for creating, minting, and distributing Proof of Attendance Protocol (POAP) badges on the Base Sepolia network. Each POAP is an ERC-721 token with custom SVG artwork stored directly onchain.</p>
+                <p>The smart contract is deployed at <code>0xC3249356a483fbe17d5355D39105D2eA666d9de6</code> on Base Sepolia (chain ID 84532).</p>
+
+                <h3>Key Features</h3>
+                <ul>
+                  <li><strong>Create POAPs</strong> — Design custom SVG badges with metadata and register them onchain</li>
+                  <li><strong>Three Mint Types</strong> — Public, allowlist (Merkle proof), and signature-based minting</li>
+                  <li><strong>Soulbound Tokens</strong> — Optional non-transferable badges for true proof-of-attendance</li>
+                  <li><strong>Allowlist Tools</strong> — Client-side Merkle tree generation for gated events</li>
+                  <li><strong>QR Code Generator</strong> — Create physical posters with scannable mint links</li>
+                  <li><strong>Farcaster Mini App</strong> — Optimized display within Farcaster frames</li>
+                </ul>
+
+                <h3>Network Details</h3>
+                <ul>
+                  <li><strong>Network:</strong> Base Sepolia</li>
+                  <li><strong>Chain ID:</strong> 84532 (0x14a34)</li>
+                  <li><strong>RPC:</strong> https://sepolia.base.org</li>
+                  <li><strong>Explorer:</strong> https://sepolia.basescan.org</li>
+                </ul>
+              </div>
+
+              <!-- Soulbound -->
+              <div class="docs-section" id="docs-section-soulbound">
+                <h3>Soulbound POAPs</h3>
+                <p>Soulbound tokens are non-transferable NFTs. Once minted to a wallet, they cannot be moved to another address. This ensures the POAP genuinely represents the holder's attendance at an event.</p>
+
+                <h3>How It Works</h3>
+                <p>When creating a POAP, the creator can toggle the <code>Soulbound</code> option. This sets a flag in the token's metadata that permanently disables the <code>transferFrom</code> and <code>safeTransferFrom</code> functions for that token.</p>
+
+                <h3>Why Soulbound?</h3>
+                <ul>
+                  <li><strong>Authenticity</strong> — The holder actually attended the event</li>
+                  <li><strong>Anti-speculation</strong> — Badges cannot be traded or sold</li>
+                  <li><strong>Reputation</strong> — Build an onchain identity of verified attendance</li>
+                  <li><strong>Governance</strong> — Use POAPs for weighted voting in DAOs</li>
+                </ul>
+              </div>
+
+              <!-- Merkle -->
+              <div class="docs-section" id="docs-section-merkle">
+                <h3>Merkle Trees</h3>
+                <p>A Merkle tree is a cryptographic data structure that allows efficient verification of large datasets. In Onchain POAPs, Merkle trees are used for allowlist-gated minting.</p>
+
+                <h3>How It Works</h3>
+                <ol style="margin-left: var(--sp-5); margin-bottom: var(--sp-4);">
+                  <li>The organizer pastes a list of allowed addresses into the Allowlist Tools</li>
+                  <li>The tool computes a Merkle root — a single hash representing the entire list</li>
+                  <li>The root is stored onchain when the POAP is created</li>
+                  <li>Each allowed address receives a Merkle proof (a list of intermediate hashes)</li>
+                  <li>At mint time, the contract verifies the proof against the stored root</li>
+                </ol>
+
+                <h3>Benefits</h3>
+                <ul>
+                  <li><strong>Gas efficient</strong> — Only the root is stored onchain, not the full list</li>
+                  <li><strong>Privacy</strong> — The full list is never published onchain</li>
+                  <li><strong>Trustless</strong> — Proofs are verified cryptographically</li>
+                </ul>
+
+                <h3>Generating Proofs</h3>
+                <p>Use the <strong>Allowlist Tools</strong> page to paste addresses and generate the Merkle root and individual proofs. Each proof is a comma-separated list of 32-byte hex values.</p>
+
+                <pre><code>// Example proof format
+0xabc123...,0xdef456...,0x789abc...</code></pre>
+              </div>
+
+              <!-- Signature -->
+              <div class="docs-section" id="docs-section-signature">
+                <h3>Signature Mints</h3>
+                <p>Signature minting allows a POAP creator to authorize specific wallets to mint a POAP by signing a message off-chain. The signed message includes the POAP ID, recipient address, and a deadline.</p>
+
+                <h3>37-Day Window</h3>
+                <p>Signature mints support a time window of up to 37 days. After the deadline, the signature becomes invalid and the recipient can no longer mint. This prevents stale authorizations from being used indefinitely.</p>
+
+                <h3>How It Works</h3>
+                <ol style="margin-left: var(--sp-5); margin-bottom: var(--sp-4);">
+                  <li>The creator signs an EIP-712 typed message containing the POAP ID, recipient, and deadline</li>
+                  <li>The signature and deadline are shared with the recipient (e.g., via QR code)</li>
+                  <li>The recipient submits the signature to the contract's <code>mintSignature</code> function</li>
+                  <li>The contract recovers the signer address and verifies it matches the POAP creator</li>
+                  <li>If the deadline has not passed, the mint succeeds</li>
+                </ol>
+
+                <h3>QR Integration</h3>
+                <p>Use the <strong>QR Signature Generator</strong> page to create signed mint URLs and downloadable QR codes for physical posters at events.</p>
+              </div>
+
+              <!-- SVG Rules -->
+              <div class="docs-section" id="docs-section-svg">
+                <h3>SVG Artwork Rules</h3>
+                <p>All POAP artwork is stored as inline SVG directly onchain. This ensures the artwork is permanently accessible without relying on external servers or IPFS.</p>
+
+                <h3>Requirements</h3>
+                <ul>
+                  <li><strong>Format:</strong> Valid SVG XML (must start with <code>&lt;svg</code>)</li>
+                  <li><strong>Size:</strong> Maximum 100KB per SVG</li>
+                  <li><strong>ViewBox:</strong> Required — recommended <code>viewBox="0 0 200 200"</code></li>
+                  <li><strong>No external references:</strong> All content must be inline (no external images, fonts, or CSS)</li>
+                  <li><strong>Self-contained:</strong> All styles and definitions must be within the SVG</li>
+                </ul>
+
+                <h3>Best Practices</h3>
+                <ul>
+                  <li>Use <code>&lt;defs&gt;</code> for gradients and patterns</li>
+                  <li>Keep paths simple to minimize onchain storage cost</li>
+                  <li>Use system-safe fonts or convert text to paths</li>
+                  <li>Test your SVG renders correctly before submitting</li>
+                </ul>
+
+                <h3>Example SVG</h3>
+                <pre><code>&lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"&gt;
+  &lt;defs&gt;
+    &lt;linearGradient id="g" x1="0" y1="0" x2="1" y2="1"&gt;
+      &lt;stop offset="0" stop-color="#00d4ff"/&gt;
+      &lt;stop offset="1" stop-color="#b14cff"/&gt;
+    &lt;/linearGradient&gt;
+  &lt;/defs&gt;
+  &lt;circle cx="100" cy="100" r="90" fill="url(#g)"/&gt;
+  &lt;text x="100" y="110" text-anchor="middle"
+    fill="white" font-size="24" font-family="sans-serif"&gt;
+    POAP
+  &lt;/text&gt;
+&lt;/svg&gt;</code></pre>
+              </div>
+
+              <!-- Farcaster -->
+              <div class="docs-section" id="docs-section-farcaster">
+                <h3>Farcaster Mini App</h3>
+                <p>Onchain POAPs can run as a Farcaster Mini App (Frame). This allows users to discover and mint POAPs directly within the Farcaster social ecosystem.</p>
+
+                <h3>How to Enable</h3>
+                <ul>
+                  <li>Toggle the <strong>Farcaster</strong> mode in the header to switch to the frame-optimized view</li>
+                  <li>The app automatically detects when loaded inside a Farcaster frame</li>
+                  <li>The Farcaster mode shows a banner and adjusts the layout for frame display</li>
+                </ul>
+
+                <h3>Frame Meta Tags</h3>
+                <p>The page includes <code>fc:frame</code> meta tags that Farcaster clients use to render the frame preview. When a user taps the frame button, it opens the full app in a webview.</p>
+
+                <h3>Use Cases</h3>
+                <ul>
+                  <li>Share POAP mint links as Farcaster casts</li>
+                  <li>Event organizers can distribute QR codes via Farcaster</li>
+                  <li>Users can showcase their POAP gallery in their Farcaster profile</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- Footer -->
+      <footer style="border-top: 1px solid var(--glass-border); padding: var(--sp-6) 0; margin-top: var(--sp-7);">
+        <div class="container text-center">
+          <div class="logo" style="justify-content: center; margin-bottom: var(--sp-3);">
+            <div class="logo-icon">&#9879;</div>
+            <span class="logo-text">Onchain POAPs</span>
+          </div>
+          <p class="text-sm text-muted">Base Sepolia &middot; 0xC3249356a483fbe17d5355D39105D2eA666d9de6</p>
+        </div>
+      </footer>
+    </div>
+
+    <!-- POAP Modal -->
+    <div class="modal-overlay" id="poap-modal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 data-i18n="modal.details">POAP Details</h3>
+          <button class="modal-close" id="modal-close">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div class="modal-body" id="modal-body"></div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
